@@ -46,7 +46,7 @@
   .count-badge span{color:#9db3c0; font-size:11.5px; text-transform:uppercase; letter-spacing:.08em}
 
   /* ---- layout ---- */
-  .layout{display:grid; grid-template-columns:var(--rail-width,280px) minmax(0,1fr); gap:22px; padding:22px 0 60px; align-items:start}
+  .layout{display:grid; grid-template-columns:var(--rail-width,360px) minmax(0,1fr); gap:22px; padding:22px 0 60px; align-items:start}
   @media(max-width:880px){ .layout{grid-template-columns:1fr} }
   @media(min-width:881px){
     .rail{position:relative}
@@ -149,6 +149,40 @@
   footer{color:var(--muted); font-size:12px; text-align:center; padding:24px 0 40px}
   /* hide OBC column when not relevant handled in JS via class */
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* Full-width desktop layout */
+  @media (min-width:881px){
+    .wrap{
+      width:100% !important;
+      max-width:none !important;
+      margin-left:0 !important;
+      margin-right:0 !important;
+      padding-left:24px !important;
+      padding-right:24px !important;
+      box-sizing:border-box;
+    }
+    .layout{
+      width:100% !important;
+      max-width:none !important;
+      box-sizing:border-box;
+    }
+    .rail{
+      min-width:360px;
+    }
+    .date-row, .dates, .date-range{
+      min-width:0;
+    }
+    input[type="date"]{
+      min-width:0;
+      width:100%;
+      box-sizing:border-box;
+    }
+    main, .main, .results, .content{
+      min-width:0;
+      max-width:none;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -158,7 +192,7 @@
       <div class="brand">Cruise Tracker<span class="dot">.</span></div>
       <div class="tagline">Cruise fares from Australian ports — ranked by value per day</div>
       <div class="site-tools">
-        <span class="updated">Updated: 19/09/2026 08:20</span>
+        <span class="updated">Updated: 19/09/2026 08:33</span>
         <a class="excel-download" href="Cruise_Fares_Latest.xlsx" download>Download Excel report</a>
         <a class="run-tracker-btn" href="https://github.com/dj196612/CruiseFareTracker/actions/workflows/cruise-tracker.yml" target="_blank" rel="noopener noreferrer" title="Open GitHub Actions, then select Run workflow">Run Tracker Now</a>
       </div>
@@ -388,7 +422,7 @@ function init(){
   // Desktop filter rail resize. The chosen width is remembered in this browser.
   const rail=document.getElementById("rail"), railResizer=document.getElementById("rail-resizer");
   if(rail && railResizer){
-    const KEY="cruiseFinderRailWidth", MIN=230;
+    const KEY="cruiseFinderRailWidth", MIN=360;
     const maxRail=()=>Math.min(620,Math.floor(window.innerWidth*.55));
     const setRailWidth=(px,save)=>{
       const w=Math.max(MIN,Math.min(maxRail(),Math.round(px)));
@@ -412,7 +446,7 @@ function init(){
     };
     railResizer.addEventListener("pointerup",finishResize);
     railResizer.addEventListener("pointercancel",finishResize);
-    railResizer.addEventListener("dblclick",()=>setRailWidth(280,true));
+    railResizer.addEventListener("dblclick",()=>setRailWidth(360,true));
   }
   render();
 }
